@@ -1,8 +1,7 @@
 import React from 'react';
 import { Input, Col, Row } from 'antd';
 import { connect } from 'react-redux';
-
-import { fetchVideos, fetchOneVideo } from '../actions/videos';
+import { fetchWeather } from '../../actions/weather';
 
 const Search = Input.Search;
 
@@ -14,12 +13,7 @@ class SearchBar extends React.Component {
         }
     }
 
-    handlUpdateVideos () {
-        setTimeout(() => {
-            this.props.dispatch(fetchVideos(this.state.keyword));
-            this.props.dispatch(fetchOneVideo(this.state.keyword));
-        }, 300);
-    }
+ 
     render() {
         return (
                 <Row>
@@ -29,7 +23,7 @@ class SearchBar extends React.Component {
                             size="large"
                             value = {this.state.keyword}
                             onChange = {(e) => {this.setState({keyword: e.target.value})}}
-                            onSearch={this.handlUpdateVideos.bind(this)}
+                            onSearch={() => this.props.searchWeather(this.state.keyword)}
                         />
                     </Col>
                 </Row>
@@ -38,10 +32,18 @@ class SearchBar extends React.Component {
 }
 
 
-var mapStateToProps = (data) => {
+var mapState = (state) => {
     return {
-        data: data
+        weather: state.weatherReducer
     }
 }
 
-export default connect(mapStateToProps)(SearchBar);
+var mapDispatch  = (dispatch) => {
+    return {
+        searchWeather(key) {
+            dispatch(fetchWeather(key));
+        }
+    }
+}
+
+export default connect(mapState, mapDispatch)(SearchBar);

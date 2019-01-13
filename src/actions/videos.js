@@ -21,7 +21,7 @@ export function fetchVideos(keyword) {
 
     return (dispatch) => {
         fetch(`${ROOT_URL}?q=${keyword}&part=snippet&key=${API_KEY}`)
-            .then((resp) => {resp.json(); console.log(resp)})
+            .then((resp) => resp.json())
             .then(resp => {
                 dispatch({
                     type: FETCH_VIDEOS,
@@ -46,7 +46,7 @@ export function fetchOneVideo(keyword) {
     // }
     return (dispatch) => {
         fetch(`${ ROOT_URL }?q=${keyword}&part=snippet&key=${API_KEY}`)
-            .then((resp) => {resp.json(); console.log(resp)})
+            .then((resp) => resp.json())
             .then(resp => {
                 dispatch({
                     type: FETCH_ONE_VIDEO,
